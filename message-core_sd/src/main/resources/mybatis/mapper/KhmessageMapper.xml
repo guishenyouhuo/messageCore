@@ -126,6 +126,9 @@
       </if>
     </trim>
   </insert>
+  
+  
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.message.domain.KhmessageWithBLOBs" >
     update khmessage
     <set >
@@ -194,14 +197,203 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   
+  <!-- 查询Message总数 -->
+  <select id="selectMessageCount" resultType="java.lang.Integer">
+  	select 
+    	count(1)
+    from khmessage
+    where id > 0
+    <if test="msgType != null and msgType != ''">
+    	and type = #{msgType,jdbcType=VARCHAR}
+    </if>
+    <if test="msgType == null or msgType == ''">
+    	and type != '3'
+    </if>
+    <if test="gsNum !=null and gsNum != ''">
+    	and fp_user = #{gsNum,jdbcType=VARCHAR}
+    </if>
+    <if test="nextVisitTime != null and nextVisitTime != 'history'.toString()">  
+       and lasthf = #{nextVisitTime,jdbcType=VARCHAR} 
+    </if>
+    <if test="nextVisitTime != null and nextVisitTime == 'history'.toString()"> 
+       and lasthf != '' and lasthf <![CDATA[<]]> date_format(curdate(),'%Y-%m-%d') 
+    </if> 
+  </select>
+  
+  <!-- 分页查询Message -->
+  <select id="selectMessageByPage" resultMap="ResultMapWithBLOBs">
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from khmessage
+    where id > 0
+    <if test="msgType != null and msgType != ''">
+    	and type = #{msgType,jdbcType=VARCHAR}
+    </if>
+    <if test="msgType == null or msgType == ''">
+    	and type != '3'
+    </if>
+    <if test="gsNum !=null and gsNum != ''">
+    	and fp_user = #{gsNum,jdbcType=VARCHAR}
+    </if>
+    <if test="nextVisitTime != null and nextVisitTime != 'history'.toString()">  
+       and lasthf = #{nextVisitTime,jdbcType=VARCHAR} 
+    </if>
+    <if test="nextVisitTime != null and nextVisitTime == 'history'.toString()"> 
+       and lasthf != '' and lasthf <![CDATA[<]]> date_format(curdate(),'%Y-%m-%d') 
+    </if> 
+    <if test="nextVisitTime == null">
+    	order by id desc 
+    </if>
+    <if test="nextVisitTime != null">
+    	order by lasthf desc 
+    </if>
+    limit #{startNo,jdbcType=INTEGER} ,#{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 根据条件搜索message -->
+  <select id="searchMessageByCondition" resultMap="ResultMapWithBLOBs">
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from khmessage
+    where id > 0 
+    <if test="custTel != null and custTel != ''">
+    	and kh_tel = #{custTel,jdbcType=VARCHAR}
+    </if>
+    <if test="msgId != null and msgId != ''">
+    	and id = #{msgId,jdbcType=VARCHAR}
+    </if>
+    <if test="custName !=null and custName != ''">
+    	and kh_name = #{custName,jdbcType=VARCHAR}
+    </if>
+    <if test="userNum != null and userNum != ''">  
+       and fp_user = #{userNum,jdbcType=VARCHAR} 
+    </if> 
+  </select>
+  
+  <!-- 批量插入 -->
+  <insert id="bactchInsert">
+   <foreach collection="msgList" item="msg" separator=";">
+	    insert into khmessage
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="msg.id != null" >
+	        id,
+	      </if>
+	      <if test="msg.khName != null" >
+	        kh_name,
+	      </if>
+	      <if test="msg.khTel != null" >
+	        kh_tel,
+	      </if>
+	      <if test="msg.khAddress != null" >
+	        kh_address,
+	      </if>
+	      <if test="msg.fpUser != null" >
+	        fp_user,
+	      </if>
+	      <if test="msg.intime != null" >
+	        intime,
+	      </if>
+	      <if test="msg.lasthf != null" >
+	        lasthf,
+	      </if>
+	      <if test="msg.type != null" >
+	        type,
+	      </if>
+	      <if test="msg.tag != null" >
+	        tag,
+	      </if>
+	      <if test="msg.lastUser != null" >
+	        last_user,
+	      </if>
+	      <if test="msg.khLy != null" >
+	        kh_ly,
+	      </if>
+	      <if test="msg.fpHf != null" >
+	        fp_hf,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="msg.id != null" >
+	        #{msg.id,jdbcType=BIGINT},
+	      </if>
+	      <if test="msg.khName != null" >
+	        #{msg.khName,jdbcType=VARCHAR},
+	      </if>
+	      <if test="msg.khTel != null" >
+	        #{msg.khTel,jdbcType=VARCHAR},
+	      </if>
+	      <if test="msg.khAddress != null" >
+	        #{msg.khAddress,jdbcType=VARCHAR},
+	      </if>
+	      <if test="msg.fpUser != null" >
+	        #{msg.fpUser,jdbcType=INTEGER},
+	      </if>
+	      <if test="msg.intime != null" >
+	        #{msg.intime,jdbcType=VARCHAR},
+	      </if>
+	      <if test="msg.lasthf != null" >
+	        #{msg.lasthf,jdbcType=VARCHAR},
+	      </if>
+	      <if test="msg.type != null" >
+	        #{msg.type,jdbcType=INTEGER},
+	      </if>
+	      <if test="msg.tag != null" >
+	        #{msg.tag,jdbcType=VARCHAR},
+	      </if>
+	      <if test="msg.lastUser != null" >
+	        #{msg.lastUser,jdbcType=INTEGER},
+	      </if>
+	      <if test="msg.khLy != null" >
+	        #{msg.khLy,jdbcType=LONGVARCHAR},
+	      </if>
+	      <if test="msg.fpHf != null" >
+	        #{msg.fpHf,jdbcType=LONGVARCHAR},
+	      </if>
+	    </trim>
+    </foreach>
+  </insert>
+  
+  <!-- 联想查询电话号码 -->
+  <select id="queryLinkedTel" resultType="java.lang.String">
+  	select kh_tel
+    from khmessage
+    where kh_tel like concat(#{telNo},'%') 
+    <if test="gsNum != null" >
+	   and fp_user=#{gsNum,jdbcType=VARCHAR}
+	</if>
+  </select>
+  
+  <!-- 查询一页中电话号码数据库中存在的记录 -->
+  <select id="queryExistTel" resultType="java.lang.String">
+  	select kh_tel
+    from khmessage
+    where kh_tel in 
+    <foreach collection="telList" item="khTel" index="index" open="(" close=")" separator=",">
+    	#{khTel,jdbcType=VARCHAR}
+    </foreach>
+  </select>
+  
+  <!-- 根据用户查询留言id -->
   <select id="selectMsgIdByUser" resultType="java.lang.String">
   	select id from khmessage where fp_user = #{srcUser} order by id
   </select>
   
+  <!-- 批量更新(分配) -->
   <update id="batchUpdateByUser">
   	update khmessage set fp_user = #{fpUser} where id in 
   	<foreach collection="msgList" index="index" open="(" close=")" item="msg" separator=",">
   		#{msg}
   	</foreach>
   </update>
+  
+  <update id="updateToUnVisit">
+  	update khmessage set type = 0 
+  	where (fp_hf='' || fp_hf is null) 
+  	and (lasthf='' || lasthf is null)
+  </update>
+  
 </mapper>

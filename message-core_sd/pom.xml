@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.wangfei.message</groupId>
-	<artifactId>message-core</artifactId>
+	<artifactId>message-core_sd</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>message-core Maven Webapp</name>
+	<name>message-core_sd Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
