@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.message.dao.MsgTemplateMapper" >
+  <resultMap id="BaseResultMap" type="com.message.domain.MsgTemplate" >
+    <id column="tmp_key" property="tmpKey" jdbcType="VARCHAR" />
+    <result column="has_firstline" property="hasFirstline" jdbcType="CHAR" />
+    <result column="col_name" property="colName" jdbcType="VARCHAR" />
+    <result column="col_tel" property="colTel" jdbcType="VARCHAR" />
+    <result column="col_addr" property="colAddr" jdbcType="VARCHAR" />
+    <result column="col_msg" property="colMsg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tmp_key, has_firstline, col_name, col_tel, col_addr, col_msg
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from msg_template
+    where tmp_key = #{tmpKey,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from msg_template
+    where tmp_key = #{tmpKey,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.message.domain.MsgTemplate" >
+    insert into msg_template (tmp_key, has_firstline, col_name, 
+      col_tel, col_addr, col_msg
+      )
+    values (#{tmpKey,jdbcType=VARCHAR}, #{hasFirstline,jdbcType=CHAR}, #{colName,jdbcType=VARCHAR}, 
+      #{colTel,jdbcType=VARCHAR}, #{colAddr,jdbcType=VARCHAR}, #{colMsg,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.message.domain.MsgTemplate" >
+    insert into msg_template
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tmpKey != null" >
+        tmp_key,
+      </if>
+      <if test="hasFirstline != null" >
+        has_firstline,
+      </if>
+      <if test="colName != null" >
+        col_name,
+      </if>
+      <if test="colTel != null" >
+        col_tel,
+      </if>
+      <if test="colAddr != null" >
+        col_addr,
+      </if>
+      <if test="colMsg != null" >
+        col_msg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tmpKey != null" >
+        #{tmpKey,jdbcType=VARCHAR},
+      </if>
+      <if test="hasFirstline != null" >
+        #{hasFirstline,jdbcType=CHAR},
+      </if>
+      <if test="colName != null" >
+        #{colName,jdbcType=VARCHAR},
+      </if>
+      <if test="colTel != null" >
+        #{colTel,jdbcType=VARCHAR},
+      </if>
+      <if test="colAddr != null" >
+        #{colAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="colMsg != null" >
+        #{colMsg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.message.domain.MsgTemplate" >
+    update msg_template
+    <set >
+      <if test="hasFirstline != null" >
+        has_firstline = #{hasFirstline,jdbcType=CHAR},
+      </if>
+      <if test="colName != null" >
+        col_name = #{colName,jdbcType=VARCHAR},
+      </if>
+      <if test="colTel != null" >
+        col_tel = #{colTel,jdbcType=VARCHAR},
+      </if>
+      <if test="colAddr != null" >
+        col_addr = #{colAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="colMsg != null" >
+        col_msg = #{colMsg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tmp_key = #{tmpKey,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.message.domain.MsgTemplate" >
+    update msg_template
+    set has_firstline = #{hasFirstline,jdbcType=CHAR},
+      col_name = #{colName,jdbcType=VARCHAR},
+      col_tel = #{colTel,jdbcType=VARCHAR},
+      col_addr = #{colAddr,jdbcType=VARCHAR},
+      col_msg = #{colMsg,jdbcType=VARCHAR}
+    where tmp_key = #{tmpKey,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectAllTemplates" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from msg_template
+  </select>
+</mapper>

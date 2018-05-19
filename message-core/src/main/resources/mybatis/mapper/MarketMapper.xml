@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.message.dao.MarketMapper" >
+  <resultMap id="BaseResultMap" type="com.message.domain.Market" >
+    <id column="id" property="id" jdbcType="SMALLINT" />
+    <result column="kh_name" property="khName" jdbcType="VARCHAR" />
+    <result column="kh_tel" property="khTel" jdbcType="VARCHAR" />
+    <result column="kh_address" property="khAddress" jdbcType="VARCHAR" />
+    <result column="fp_user" property="fpUser" jdbcType="INTEGER" />
+    <result column="intime" property="intime" jdbcType="VARCHAR" />
+    <result column="lasthf" property="lasthf" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="tag" property="tag" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.message.domain.MarketWithBLOBs" extends="BaseResultMap" >
+    <result column="kh_ly" property="khLy" jdbcType="LONGVARCHAR" />
+    <result column="fp_hf" property="fpHf" jdbcType="LONGVARCHAR" />
+    <result column="firstinfo" property="firstinfo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, kh_name, kh_tel, kh_address, fp_user, intime, lasthf, type, tag
+  </sql>
+  <sql id="Blob_Column_List" >
+    kh_ly, fp_hf, firstinfo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Short" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from market
+    where id = #{id,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+    delete from market
+    where id = #{id,jdbcType=SMALLINT}
+  </delete>
+  <insert id="insert" parameterType="com.message.domain.MarketWithBLOBs" >
+    insert into market (id, kh_name, kh_tel, 
+      kh_address, fp_user, intime, 
+      lasthf, type, tag, 
+      kh_ly, fp_hf, firstinfo
+      )
+    values (#{id,jdbcType=SMALLINT}, #{khName,jdbcType=VARCHAR}, #{khTel,jdbcType=VARCHAR}, 
+      #{khAddress,jdbcType=VARCHAR}, #{fpUser,jdbcType=INTEGER}, #{intime,jdbcType=VARCHAR}, 
+      #{lasthf,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{tag,jdbcType=VARCHAR}, 
+      #{khLy,jdbcType=LONGVARCHAR}, #{fpHf,jdbcType=LONGVARCHAR}, #{firstinfo,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.message.domain.MarketWithBLOBs" >
+    insert into market
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="khName != null" >
+        kh_name,
+      </if>
+      <if test="khTel != null" >
+        kh_tel,
+      </if>
+      <if test="khAddress != null" >
+        kh_address,
+      </if>
+      <if test="fpUser != null" >
+        fp_user,
+      </if>
+      <if test="intime != null" >
+        intime,
+      </if>
+      <if test="lasthf != null" >
+        lasthf,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="tag != null" >
+        tag,
+      </if>
+      <if test="khLy != null" >
+        kh_ly,
+      </if>
+      <if test="fpHf != null" >
+        fp_hf,
+      </if>
+      <if test="firstinfo != null" >
+        firstinfo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=SMALLINT},
+      </if>
+      <if test="khName != null" >
+        #{khName,jdbcType=VARCHAR},
+      </if>
+      <if test="khTel != null" >
+        #{khTel,jdbcType=VARCHAR},
+      </if>
+      <if test="khAddress != null" >
+        #{khAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="fpUser != null" >
+        #{fpUser,jdbcType=INTEGER},
+      </if>
+      <if test="intime != null" >
+        #{intime,jdbcType=VARCHAR},
+      </if>
+      <if test="lasthf != null" >
+        #{lasthf,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null" >
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="khLy != null" >
+        #{khLy,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="fpHf != null" >
+        #{fpHf,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="firstinfo != null" >
+        #{firstinfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.message.domain.MarketWithBLOBs" >
+    update market
+    <set >
+      <if test="khName != null" >
+        kh_name = #{khName,jdbcType=VARCHAR},
+      </if>
+      <if test="khTel != null" >
+        kh_tel = #{khTel,jdbcType=VARCHAR},
+      </if>
+      <if test="khAddress != null" >
+        kh_address = #{khAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="fpUser != null" >
+        fp_user = #{fpUser,jdbcType=INTEGER},
+      </if>
+      <if test="intime != null" >
+        intime = #{intime,jdbcType=VARCHAR},
+      </if>
+      <if test="lasthf != null" >
+        lasthf = #{lasthf,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="tag != null" >
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="khLy != null" >
+        kh_ly = #{khLy,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="fpHf != null" >
+        fp_hf = #{fpHf,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="firstinfo != null" >
+        firstinfo = #{firstinfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.message.domain.MarketWithBLOBs" >
+    update market
+    set kh_name = #{khName,jdbcType=VARCHAR},
+      kh_tel = #{khTel,jdbcType=VARCHAR},
+      kh_address = #{khAddress,jdbcType=VARCHAR},
+      fp_user = #{fpUser,jdbcType=INTEGER},
+      intime = #{intime,jdbcType=VARCHAR},
+      lasthf = #{lasthf,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      tag = #{tag,jdbcType=VARCHAR},
+      kh_ly = #{khLy,jdbcType=LONGVARCHAR},
+      fp_hf = #{fpHf,jdbcType=LONGVARCHAR},
+      firstinfo = #{firstinfo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.message.domain.Market" >
+    update market
+    set kh_name = #{khName,jdbcType=VARCHAR},
+      kh_tel = #{khTel,jdbcType=VARCHAR},
+      kh_address = #{khAddress,jdbcType=VARCHAR},
+      fp_user = #{fpUser,jdbcType=INTEGER},
+      intime = #{intime,jdbcType=VARCHAR},
+      lasthf = #{lasthf,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      tag = #{tag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=SMALLINT}
+  </update>
+  
+  <!-- 查询Market总数 -->
+  <select id="selectMarketCount" resultType="java.lang.Integer">
+  	select 
+    	count(1)
+    from market
+    where id > 0
+    <if test="msgType != null and msgType != ''">
+    	and type = #{msgType,jdbcType=VARCHAR}
+    </if>
+    <if test="msgType == null or msgType == ''">
+    	and type != '3'
+    </if>
+    <if test="gsNum !=null and gsNum != ''">
+    	and fp_user = #{gsNum,jdbcType=VARCHAR}
+    </if>
+    <if test="nextVisitTime != null">  
+       and lasthf = #{nextVisitTime,jdbcType=VARCHAR} 
+    </if>
+  </select>
+  
+  <!-- 分页查询Market -->
+  <select id="selectMarketByPage" resultMap="ResultMapWithBLOBs">
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from market
+    where id > 0
+    <if test="msgType != null and msgType != ''">
+    	and type = #{msgType,jdbcType=VARCHAR}
+    </if>
+    <if test="msgType == null or msgType == ''">
+    	and type != '3'
+    </if>
+    <if test="gsNum !=null and gsNum != ''">
+    	and fp_user = #{gsNum,jdbcType=VARCHAR}
+    </if>
+    <if test="nextVisitTime != null">  
+       and lasthf = #{nextVisitTime,jdbcType=VARCHAR} 
+    </if> 
+    order by id desc 
+    limit #{startNo,jdbcType=INTEGER} ,#{pageSize,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 根据条件搜索market -->
+  <select id="searchMarketByCondition" resultMap="ResultMapWithBLOBs">
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from market
+    where id > 0 
+    <if test="custTel != null and custTel != ''">
+    	and kh_tel = #{custTel,jdbcType=VARCHAR}
+    </if>
+    <if test="msgId != null and msgId != ''">
+    	and id = #{msgId,jdbcType=VARCHAR}
+    </if>
+    <if test="custName !=null and custName != ''">
+    	and kh_name = #{custName,jdbcType=VARCHAR}
+    </if>
+    <if test="userNum != null and userNum != ''">  
+       and fp_user = #{userNum,jdbcType=VARCHAR} 
+    </if> 
+  </select>
+  
+  <!-- 查询一页中电话号码数据库中存在的记录 -->
+  <select id="queryExistTel" resultType="java.lang.Integer">
+  	select count(*)
+    from market
+    where kh_tel = #{khTel,jdbcType=VARCHAR}
+  </select>
+</mapper>

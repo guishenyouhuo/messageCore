@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.message.dao.TagMappingMapper" >
+  <resultMap id="BaseResultMap" type="com.message.domain.TagMapping" >
+    <id column="tag_id" property="tagId" jdbcType="VARCHAR" />
+    <result column="tmp_key" property="tmpKey" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tag_id, tmp_key
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tag_mapping
+    where tag_id = #{tagId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tag_mapping
+    where tag_id = #{tagId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.message.domain.TagMapping" >
+    insert into tag_mapping (tag_id, tmp_key)
+    values (#{tagId,jdbcType=VARCHAR}, #{tmpKey,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.message.domain.TagMapping" >
+    insert into tag_mapping
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tagId != null" >
+        tag_id,
+      </if>
+      <if test="tmpKey != null" >
+        tmp_key,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tagId != null" >
+        #{tagId,jdbcType=VARCHAR},
+      </if>
+      <if test="tmpKey != null" >
+        #{tmpKey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.message.domain.TagMapping" >
+    update tag_mapping
+    <set >
+      <if test="tmpKey != null" >
+        tmp_key = #{tmpKey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tag_id = #{tagId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.message.domain.TagMapping" >
+    update tag_mapping
+    set tmp_key = #{tmpKey,jdbcType=VARCHAR}
+    where tag_id = #{tagId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectAllTags" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tag_mapping
+  </select>
+  
+</mapper>
