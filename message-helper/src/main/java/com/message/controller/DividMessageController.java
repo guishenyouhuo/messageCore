@@ -63,7 +63,6 @@ public class DividMessageController {
 		for(String dest : dests){
 			destList.add(dest);
 		}
-		
 		List<String> srcMsgIds = messageService.getMessageIdByUser(srcUser);
 		Map<String, List<String>> msgDividMap = DivideMessage.dividMessageByUsers(destList, srcMsgIds);
 		int result = messageService.dividMessage(msgDividMap);

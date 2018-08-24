@@ -204,7 +204,7 @@ public class MessageServiceImpl implements IMessageService {
 	
 	/**
 	 * 检查存在号码即批量插入
-	 * @param messageList
+	 * @param telMsgMap
 	 * @param telList
 	 * @return
 	 */
