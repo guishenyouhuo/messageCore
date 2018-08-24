@@ -53,7 +53,7 @@ public class DividMessageController {
 		
 		response.getWriter().write(destUserTag.toString());
 	}
-	
+
 	@RequestMapping("/dividMessage")
 	public String divideSrcToDestUser(HttpServletRequest request, Model model){
 		String srcUser = request.getParameter("srcUser");
